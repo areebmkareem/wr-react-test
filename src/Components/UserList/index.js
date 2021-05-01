@@ -43,47 +43,63 @@ const Login = () => {
   const validationErrors = formState.errors;
 
   React.useEffect(() => {
-    dispatch(getUsers());
+    // dispatch(getUsers());
   }, []);
   const classes = useStyles();
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>DOB</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {userList.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                  <Avatar src={item.user.picture.thumbnail} style={{marginRight: 10}} />
-                  <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
-                </Grid>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Typography> {item.user.email}</Typography>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Typography> {item.user.username}</Typography>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Typography> {item.user.phone}</Typography>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Typography> {item.user.dob}</Typography>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container alignItems="center" justify="space-between">
+          <Grid item>
+            <Typography>Users</Typography>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary">
+              <Typography>Create User</Typography>
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>DOB</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {userList.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    <Grid style={{display: 'flex', alignItems: 'center'}}>
+                      <Avatar src={item.user.picture.thumbnail} style={{marginRight: 10}} />
+                      <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
+                    </Grid>
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <Typography> {item.user.email}</Typography>
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <Typography> {item.user.username}</Typography>
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <Typography> {item.user.phone}</Typography>
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <Typography> {item.user.dob}</Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   );
 };
 
