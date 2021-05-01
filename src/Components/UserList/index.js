@@ -1,11 +1,10 @@
+import {useDispatch, useSelector} from 'react-redux';
+import dayjs from 'dayjs';
+import React from 'react';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
-import {useDispatch, useSelector} from 'react-redux';
-import React from 'react';
-import {getUsers} from '../../Store/Actions/Users';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,21 +12,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {getUsersFromStore, getUsersLoadingStateFromStore} from '../../Store/reduxSelectors';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import {CircularProgress} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import CreateUser from '../CreateUser';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import dayjs from 'dayjs';
+import {getUsersFromStore, getUsersLoadingStateFromStore} from '../../Store/reduxSelectors';
+import {getUsers} from '../../Store/Actions/Users';
+import CreateUser from '../CreateUser';
+
 const Login = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const dispatch = useDispatch();

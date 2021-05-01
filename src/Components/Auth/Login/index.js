@@ -10,7 +10,6 @@ import {signInWithUsernameAndPassword} from '../../../Store/Actions/Auth';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
 
   const {formState, handleSubmit, control} = useForm({
     mode: 'onSubmit',
