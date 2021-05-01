@@ -19,6 +19,9 @@ import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import CloseOutlined from '@material-ui/icons/CloseOutlined';
 
 import {getUsersFromStore, getUsersLoadingStateFromStore} from '../../Store/reduxSelectors';
 import {getUsers} from '../../Store/Actions/Users';
@@ -56,7 +59,22 @@ const Login = () => {
               <Grid item xs={12} sm={5}>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} sm={8}>
-                    <TextField fullWidth variant="outlined" label="Search" onChange={(event) => setSearchKey(event.target.value)} />
+                    <TextField
+                      InputProps={{
+                        endAdornment: searchKey !== '' && (
+                          <InputAdornment position="end">
+                            <IconButton aria-label="toggle password visibility" onClick={() => setSearchKey('')}>
+                              <CloseOutlined />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      fullWidth
+                      variant="outlined"
+                      label="Search"
+                      value={searchKey}
+                      onChange={(event) => setSearchKey(event.target.value)}
+                    />
                   </Grid>
                   <Grid item item xs={12} sm={4}>
                     <Button fullWidth variant="contained" color="primary" onClick={() => toggleModal()}>
