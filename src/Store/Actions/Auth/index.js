@@ -12,7 +12,7 @@ export const signInWithUsernameAndPassword = (payload) => async (dispatch) => {
 
 export const setUserInfo = (data) => {
   return {
-    type: types.SET_USER_INFO,
+    type: types.SET_CURRENT_USER,
     data,
   };
 };

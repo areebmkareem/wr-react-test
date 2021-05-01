@@ -10,9 +10,8 @@ import {signInWithUsernameAndPassword} from '../../../Store/Actions/Auth';
 const Login = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  console.log('state: ', state);
 
-  const {register, formState, handleSubmit, control} = useForm({
+  const {formState, handleSubmit, control} = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
   });
@@ -21,7 +20,7 @@ const Login = () => {
   };
 
   const validationErrors = formState.errors;
-  console.log('validationErrors: ', validationErrors);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="column" justify="center" alignItems="center" spacing={2}>

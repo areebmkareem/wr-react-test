@@ -6,7 +6,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case types.SET_USER_INFO:
+    case types.SET_CURRENT_USER:
       return {
         ...state,
         userInfo: action.data,

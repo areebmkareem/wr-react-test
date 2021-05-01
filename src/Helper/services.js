@@ -14,6 +14,11 @@ const signInWithUsernameAndPassword = (payload) => {
   });
 };
 
-const services = {signInWithUsernameAndPassword};
+const getData = async (url) => {
+  const response = await fetch(url);
+  return response.json();
+};
+
+const services = {signInWithUsernameAndPassword, getData};
 
 export default services;
