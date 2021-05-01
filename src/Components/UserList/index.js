@@ -16,9 +16,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import {CircularProgress} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import TextField from '@material-ui/core/TextField';
 
 import {getUsersFromStore, getUsersLoadingStateFromStore} from '../../Store/reduxSelectors';
 import {getUsers} from '../../Store/Actions/Users';
@@ -26,6 +26,7 @@ import CreateUser from '../CreateUser';
 
 const Login = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [searchKey, setSearchKey] = React.useState('');
   const dispatch = useDispatch();
   const userList = useSelector((state) => getUsersFromStore(state));
   const loading = useSelector((state) => getUsersLoadingStateFromStore(state));
@@ -37,7 +38,7 @@ const Login = () => {
   const toggleModal = () => {
     setIsModalOpen((prevIsModalOpen) => !prevIsModalOpen);
   };
-
+  const handleSearch = (item) => ((item.user.name && item.user.name.first) || '').toLowerCase().includes(searchKey.toLowerCase());
   return (
     <React.Fragment>
       <AppBar position="sticky">
@@ -52,10 +53,17 @@ const Login = () => {
               <Grid item>
                 <Typography variant="h4">Users</Typography>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" onClick={() => toggleModal()}>
-                  <Typography>Create User</Typography>
-                </Button>
+              <Grid item xs={12} sm={5}>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item xs={12} sm={8}>
+                    <TextField fullWidth variant="outlined" label="Search" onChange={(event) => setSearchKey(event.target.value)} />
+                  </Grid>
+                  <Grid item item xs={12} sm={4}>
+                    <Button fullWidth variant="contained" color="primary" onClick={() => toggleModal()}>
+                      <Typography>Create User</Typography>
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -82,28 +90,30 @@ const Login = () => {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    userList.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell component="th" scope="row">
-                          <Grid style={{display: 'flex', alignItems: 'center'}}>
-                            <Avatar src={item.user.picture && item.user.picture.thumbnail} style={{marginRight: 10}} />
-                            <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
-                          </Grid>
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <Typography> {item.user.email}</Typography>
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <Typography> {item.user.username}</Typography>
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <Typography> {item.user.phone}</Typography>
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <Typography> {dayjs(item.user.dob).format('MM/DD/YYYY')}</Typography>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    userList
+                      .filter((item) => handleSearch(item))
+                      .map((item, index) => (
+                        <TableRow key={index}>
+                          <TableCell component="th" scope="row">
+                            <Grid style={{display: 'flex', alignItems: 'center'}}>
+                              <Avatar src={item.user.picture && item.user.picture.thumbnail} style={{marginRight: 10}} />
+                              <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
+                            </Grid>
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            <Typography> {item.user.email}</Typography>
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            <Typography> {item.user.username}</Typography>
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            <Typography> {item.user.phone}</Typography>
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            <Typography> {dayjs(item.user.dob).format('MM/DD/YYYY')}</Typography>
+                          </TableCell>
+                        </TableRow>
+                      ))
                   )}
                 </TableBody>
               </Table>
