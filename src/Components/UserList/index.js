@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {getUsersFromStore, getUsersLoadingStateFromStore} from '../../Store/reduxSelectors';
 import Avatar from '@material-ui/core/Avatar';
+import Container from '@material-ui/core/Container';
 import {CircularProgress} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -23,99 +24,96 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateUser from '../CreateUser';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 const Login = () => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => getUsersFromStore(state));
   const loading = useSelector((state) => getUsersLoadingStateFromStore(state));
-  console.log('loading: ', loading);
+
   React.useEffect(() => {
     dispatch(getUsers());
   }, []);
 
   return (
     <React.Fragment>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item>
-              <Typography>Users</Typography>
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary">
-                <Typography>Create User</Typography>
-              </Button>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography variant="h6">Home</Typography>
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container alignItems="center" justify="space-between" style={{marginTop: 20}}>
+              <Grid item>
+                <Typography variant="h4">Users</Typography>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary">
+                  <Typography>Create User</Typography>
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Username</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>DOB</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {loading ? (
+          <Grid item xs={12}>
+            <TableContainer component={Paper}>
+              <Table aria-label="simple table">
+                <TableHead>
                   <TableRow>
-                    <TableCell component="th" scope="row" colSpan={5}>
-                      <Grid style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <CircularProgress />
-                      </Grid>
-                    </TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Username</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>DOB</TableCell>
                   </TableRow>
-                ) : (
-                  userList.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        <Grid style={{display: 'flex', alignItems: 'center'}}>
-                          <Avatar src={item.user.picture && item.user.picture.thumbnail} style={{marginRight: 10}} />
-                          <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
+                </TableHead>
+                <TableBody>
+                  {loading ? (
+                    <TableRow>
+                      <TableCell component="th" scope="row" colSpan={5}>
+                        <Grid style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 300}}>
+                          <Typography variant="h6">Getting Users.. </Typography>
+                          <CircularProgress size={20} />
                         </Grid>
                       </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Typography> {item.user.email}</Typography>
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Typography> {item.user.username}</Typography>
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Typography> {item.user.phone}</Typography>
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Typography> {item.user.dob}</Typography>
-                      </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  ) : (
+                    userList.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          <Grid style={{display: 'flex', alignItems: 'center'}}>
+                            <Avatar src={item.user.picture && item.user.picture.thumbnail} style={{marginRight: 10}} />
+                            <Typography> {`${item.user.name.first} ${item.user.name.last}`}</Typography>
+                          </Grid>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Typography> {item.user.email}</Typography>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Typography> {item.user.username}</Typography>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Typography> {item.user.phone}</Typography>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Typography> {item.user.dob}</Typography>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
+
       <Dialog fullWidth onClose={() => {}} aria-labelledby="customized-dialog-title" open={false}>
         <CreateUser />
       </Dialog>
     </React.Fragment>
   );
 };
-
-// const DialogTitle = (props) => {
-//   const {children, classes, onClose, ...other} = props;
-//   return (
-//     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-//       <Typography variant="h6">{children}</Typography>
-//       {onClose ? (
-//         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-//           <CloseIcon />
-//         </IconButton>
-//       ) : null}
-//     </MuiDialogTitle>
-//   );
-// };
 
 export default Login;
