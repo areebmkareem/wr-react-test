@@ -26,7 +26,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import CreateUser from '../CreateUser';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+
+import dayjs from 'dayjs';
 const Login = () => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const dispatch = useDispatch();
   const userList = useSelector((state) => getUsersFromStore(state));
   const loading = useSelector((state) => getUsersLoadingStateFromStore(state));
@@ -34,6 +37,10 @@ const Login = () => {
   React.useEffect(() => {
     dispatch(getUsers());
   }, []);
+
+  const toggleModal = () => {
+    setIsModalOpen((prevIsModalOpen) => !prevIsModalOpen);
+  };
 
   return (
     <React.Fragment>
@@ -50,7 +57,7 @@ const Login = () => {
                 <Typography variant="h4">Users</Typography>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => toggleModal()}>
                   <Typography>Create User</Typography>
                 </Button>
               </Grid>
@@ -97,7 +104,7 @@ const Login = () => {
                           <Typography> {item.user.phone}</Typography>
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          <Typography> {item.user.dob}</Typography>
+                          <Typography> {dayjs(item.user.dob).format('MM/DD/YYYY')}</Typography>
                         </TableCell>
                       </TableRow>
                     ))
@@ -109,8 +116,8 @@ const Login = () => {
         </Grid>
       </Container>
 
-      <Dialog fullWidth onClose={() => {}} aria-labelledby="customized-dialog-title" open={false}>
-        <CreateUser />
+      <Dialog fullWidth onClose={() => {}} aria-labelledby="customized-dialog-title" open={isModalOpen}>
+        <CreateUser onClose={() => toggleModal()} />
       </Dialog>
     </React.Fragment>
   );
