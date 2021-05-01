@@ -1,6 +1,6 @@
-# rw-test
+# wr-react-test
 
-You can find the deployed app here [rw-test](https://determined-murdock-e977b6.netlify.app/).
+You can find the deployed app here [wr-test](https://determined-murdock-e977b6.netlify.app/).
 
 ## Available Scripts
 
