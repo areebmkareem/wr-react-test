@@ -2,6 +2,7 @@ import * as types from '../../actionTypes';
 
 const initialState = {
   userInfo: {},
+  loading: true,
 };
 
 const auth = (state = initialState, action) => {
@@ -10,6 +11,7 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.data,
+        loading: false,
       };
     default:
       return state;
