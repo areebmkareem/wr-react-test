@@ -43,7 +43,7 @@ const Login = () => {
   const validationErrors = formState.errors;
 
   React.useEffect(() => {
-    // dispatch(getUsers());
+    dispatch(getUsers());
   }, []);
   const classes = useStyles();
   return (
